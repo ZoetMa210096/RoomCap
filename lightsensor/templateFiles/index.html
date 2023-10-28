@@ -11,7 +11,7 @@
     <style>
 		
 		table, th, td {
-			border:1px solid black;
+			border:1px solid white;
 		}	
         body,h1 {font-family: "Raleway", sans-serif}
         body, html {height: 100%}
@@ -97,10 +97,6 @@
 		max-width:1000px;
 		}
 
-        
-
-
-
     </style>
 	
 	
@@ -119,6 +115,7 @@
                     <th>Raum Nummer</th>
                     <th>Raum Name</th>
                     <th>Personen Anzahl</th>
+                    
                 </tr>
                <button class=" myButtonAdd" onclick="Add()">Neuer Raum</button> 
                <button class=" myButtonDelete" onclick="Delete()">Raum Löschen</button>
@@ -142,6 +139,7 @@ function Add() {
   // Raumnummer und Raumname vom Benutzer abfragen
   var raumnummer = prompt("Bitte geben Sie die Raumnummer ein:");
   var raumname = prompt("Bitte geben Sie den Raumnamen ein:");
+  var personenCount = reloadPage();
 
   // Tabellenzellen für Raumnummer und Raumname erstellen
   var raumnummerZelle = neueReihe.insertCell(1);
@@ -151,6 +149,9 @@ function Add() {
   var raumnameZelle = neueReihe.insertCell(2);
   raumnameZelle.innerHTML = raumname;
 
+  var personCount = neueReihe.insertCell(3);
+  personCount.innerHTML = "";
+ 
   
   };
   function Delete() {
@@ -171,12 +172,12 @@ function Add() {
             fetch('http://localhost:5000/personCountFunction') 
             .then(response => response.text())
             .then(text => {
-                    const div = document.getElementById("tb");
+                    const div = document.querySelector("Table").querySelector("tr:last-of-type").querySelector("td:last-of-type");
                     div.innerHTML = text;
             })
         }
 
-        /*setInterval(reloadPage, 50);*/
+        setInterval(reloadPage, 50);
 
         function addtb() {
 

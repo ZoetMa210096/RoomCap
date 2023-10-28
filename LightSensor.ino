@@ -1,5 +1,5 @@
-#define IRpin1 11 
-#define IRpin2 10
+#define IRpin1 10 
+#define IRpin2 11
 #define ledPin 13
 
 int personCount = 0;

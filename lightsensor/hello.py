@@ -13,7 +13,7 @@ def poll_arduino():
     global personCount
     print("Poll Arduino")
     
-    arduino = serial.Serial('COM6', 9600)
+    arduino = serial.Serial('COM5', 9600)
     lastValue = False
 
     while True:
