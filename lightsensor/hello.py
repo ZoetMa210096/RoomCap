@@ -1,18 +1,36 @@
+
 from flask import Flask
 import serial
+import logging
+import threading
+import time
+
+personCount = 0 
+
+def poll_arduino():
+
+    global personCount
+    print("Poll Arduino")
+    
+    arduino = serial.Serial('COM4', 9600)
+
+    while True:
+        data = arduino.readline().decode('utf-8').strip()
+        #serial.flushInput()
+        if data=="no":
+            pass
+        if data=="yes":
+            personCount = personCount + 1
+        print(personCount)
+
+arduino_thread = threading.Thread(target=poll_arduino, daemon=True)
+arduino_thread.start()
 
 app = Flask(__name__)
-
-arduino = serial.Serial('COM4', 9600, timeout=1)
 
 @app.route("/")
 def hello_world():
 
-  
-    data = arduino.readline().decode('utf-8').strip()
-
-    print(data)
-
-    return "<h1>This is our LightSensor Project!</h1>" + " " + data
+    return "<h1>This is our LightSensor Project!</h1>" + " " + str(personCount)
     
     
