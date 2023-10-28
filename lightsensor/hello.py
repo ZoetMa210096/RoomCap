@@ -12,17 +12,17 @@ def poll_arduino():
     global personCount
     print("Poll Arduino")
     
-    arduino = serial.Serial('COM4', 9600)
+    arduino = serial.Serial('COM6', 9600)
     lastValue = False
 
     while True:
         data = arduino.readline().decode('utf-8').strip()
 
         #serial.flushInput()
-        if data=="no":
-            lastValue = data
+        if data=="Rausgehen":
+            personCount = personCount - 1
             pass
-        if data=="yes" and lastValue!=data:
+        if data=="Reingehen":
             personCount = personCount + 1
             lastValue = data
         print(personCount)
