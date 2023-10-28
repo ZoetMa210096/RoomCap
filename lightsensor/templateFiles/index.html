@@ -10,7 +10,7 @@
 
     <style>
 		
-		table, th, td {
+    table, th, td {
 			border:1px solid white;
 		}	
         body,h1 {font-family: "Raleway", sans-serif}
@@ -23,14 +23,15 @@
         }
         h1{
             text-align: center;
-            font-size: 50px;
+            font-size: 100px;
         }
         .formatLeft{
             margin-left: 10%;
         }
-
+	
 		.centered{
 		text-align:center;
+		width:100%;
 		}
 		*{
 		color: white;
@@ -48,7 +49,7 @@
 			font-family:Arial;
 			font-size:15px;
 			font-weight:bold;
-			padding:10px 30px;
+			padding:10px 180px;
 			text-decoration:none;
 			text-shadow:0px 1px 0px #810e05;
 		}
@@ -73,7 +74,7 @@
 			font-family:Arial;
 			font-size:15px;
 			font-weight:bold;
-			padding:10px 30px;
+			padding:10px 180px;
 			text-decoration:none;
 			text-shadow:0px 1px 0px #2f6627;
 		}
@@ -89,13 +90,20 @@
         .centerGrid{
 		display:grid;
 		justify-items: center;
+		}
 		
+		.buttonContainer{
+		display:flex;
+		justify-content:space-between;
 		}
 		
 		.table-auto{
 		width:100%;
 		max-width:1000px;
+		display:grid;
+		gap:40px;
 		}
+
 
     </style>
 	
@@ -107,20 +115,27 @@
 
 <body style ="background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%);">
 
-    <h1>RoomCap</h1><br /><br />
+  <h1>RoomCap</h1><br /><br /> <br />
 <div class ="centerGrid">
-        <table class="table-auto centered" id="raumTabelle">
-                <tr>
-                    <th>ID</th>
-                    <th>Raum Nummer</th>
-                    <th>Raum Name</th>
-                    <th>Personen Anzahl</th>
-                    
-                </tr>
-               <button class=" myButtonAdd" onclick="Add()">Neuer Raum</button> 
-               <button class=" myButtonDelete" onclick="Delete()">Raum Löschen</button>
-        </table>
+<div class="table-auto">
+<div class="buttonContainer" >
+      <button class=" myButtonAdd" onclick="Add()">Neuer Raum</button>
+      <button class=" myButtonDelete" onclick="Delete()">Raum Löschen</button> 
+</div> 
+<table class="centered" id="raumTabelle">
+              <tr>
+                  <th>ID</th>
+                  <th>Raum Nummer</th>
+                  <th>Raum Name</th>
+                  <th>Personen</th>
+              </tr>
+            
+      </table>
+
 </div>
+      
+</div>
+      
         
     <script>
 	  var myID = 1;
@@ -143,7 +158,6 @@ function Add() {
 
   // Tabellenzellen für Raumnummer und Raumname erstellen
   var raumnummerZelle = neueReihe.insertCell(1);
-  raumnummerZelle.setAttribute("class", "border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400");
   raumnummerZelle.innerHTML = raumnummer;
 
   var raumnameZelle = neueReihe.insertCell(2);
@@ -152,6 +166,11 @@ function Add() {
   var personCount = neueReihe.insertCell(3);
   personCount.innerHTML = "";
  
+  fetch('http://localhost:5000/resetCount') 
+            .then(response => response.text())
+            .then(text => {
+                    
+            })
   
   };
   function Delete() {

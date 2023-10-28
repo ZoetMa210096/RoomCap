@@ -45,3 +45,10 @@ def index():
 @cross_origin(supports_credentials=True)
 def personCountFunction():
     return str(personCount)
+
+@app.route("/resetCount")
+@cross_origin(supports_credentials=True)
+def resetCount():
+    global personCount
+    personCount = 0
+    return ""
