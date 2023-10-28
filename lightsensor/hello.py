@@ -13,14 +13,18 @@ def poll_arduino():
     print("Poll Arduino")
     
     arduino = serial.Serial('COM4', 9600)
+    lastValue = False
 
     while True:
         data = arduino.readline().decode('utf-8').strip()
+
         #serial.flushInput()
         if data=="no":
+            lastValue = data
             pass
-        if data=="yes":
+        if data=="yes" and lastValue!=data:
             personCount = personCount + 1
+            lastValue = data
         print(personCount)
 
 arduino_thread = threading.Thread(target=poll_arduino, daemon=True)
