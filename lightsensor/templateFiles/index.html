@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    
 
     <title>RoomCap</title>
 
     <style>
-
-
+		
+		table, th, td {
+			border:1px solid black;
+		}	
         body,h1 {font-family: "Raleway", sans-serif}
         body, html {height: 100%}
         .bgimg {
@@ -22,44 +23,160 @@
         }
         h1{
             text-align: center;
-            color: black;
+            font-size: 50px;
         }
         .formatLeft{
             margin-left: 10%;
         }
 
+		.centered{
+		text-align:center;
+		}
+		*{
+		color: white;
+		}
+		
+		.myButtonDelete {
+			box-shadow:inset 0px 1px 0px 0px #f5978e;
+			background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
+			background-color:#f24537;
+			border-radius:6px;
+			border:1px solid #d02718;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:15px;
+			font-weight:bold;
+			padding:10px 30px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #810e05;
+		}
+		.myButtonDelete:hover {
+			background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
+			background-color:#c62d1f;
+		}
+		.myButtonDelete:active {
+			position:relative;
+			top:1px;
+		}
+		
+		.myButtonAdd {
+			box-shadow:inset 0px 1px 0px 0px #3dc21b;
+			background:linear-gradient(to bottom, #44c767 5%, #5cbf2a 100%);
+			background-color:#44c767;
+			border-radius:6px;
+			border:1px solid #18ab29;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:15px;
+			font-weight:bold;
+			padding:10px 30px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #2f6627;
+		}
+		.myButtonAdd:hover {
+			background:linear-gradient(to bottom, #5cbf2a 5%, #44c767 100%);
+			background-color:#5cbf2a;
+		}
+		.myButtonAdd:active {
+			position:relative;
+			top:1px;
+		}
+		
+        .centerGrid{
+		display:grid;
+		justify-items: center;
+		
+		}
+		
+		.table-auto{
+		width:100%;
+		max-width:1000px;
+		}
+
+        
+
 
 
     </style>
+	
+	
+  <!-- script src="https://cdn.tailwindcss.com"></script> -->
+	
 
 </head>
 
-<body>
+<body style ="background-image: linear-gradient(90deg, #020024 0%, #090979 35%, #00d4ff 100%);">
 
     <h1>RoomCap</h1><br /><br />
-
-    <form class="formatLeft">
-        <input type="button" onclick="addtb()" value="Hier klicken um Namen hinzuzufügen." />
-    </form> 
-
-        <table class="formatLeft">
+<div class ="centerGrid">
+        <table class="table-auto centered" id="raumTabelle">
                 <tr>
                     <th>ID</th>
                     <th>Raum Nummer</th>
                     <th>Raum Name</th>
-                    <th>Personen</th>
+                    <th>Personen Anzahl</th>
                 </tr>
-                <tbody id="tb">
-                </tbody>
+               <button class=" myButtonAdd" onclick="Add()">Neuer Raum</button> 
+               <button class=" myButtonDelete" onclick="Delete()">Raum Löschen</button>
         </table>
+</div>
         
     <script>
+	  var myID = 1;
+	  
+function Add() {
+  var raumTabelle = document.getElementById("raumTabelle");
+
+  // Neue Tabellenreihe erstellen
+  var neueReihe = raumTabelle.insertRow(-1);
+
+  // Feste ID vergeben
+  var idZelle = neueReihe.insertCell(0);
+  idZelle.innerHTML = myID;
+  myID++; 	
+
+  // Raumnummer und Raumname vom Benutzer abfragen
+  var raumnummer = prompt("Bitte geben Sie die Raumnummer ein:");
+  var raumname = prompt("Bitte geben Sie den Raumnamen ein:");
+
+  // Tabellenzellen für Raumnummer und Raumname erstellen
+  var raumnummerZelle = neueReihe.insertCell(1);
+  raumnummerZelle.setAttribute("class", "border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400");
+  raumnummerZelle.innerHTML = raumnummer;
+
+  var raumnameZelle = neueReihe.insertCell(2);
+  raumnameZelle.innerHTML = raumname;
+
+  
+  };
+  function Delete() {
+  var raumTabelle = document.getElementById("raumTabelle");
+  var rows = raumTabelle.getElementsByTagName("tr");
+  
+  // Stellen Sie sicher, dass mindestens eine Reihe vorhanden ist
+  if (rows.length > 1) {
+    raumTabelle.deleteRow(rows.length - 1);
+	myID--;
+  } else {
+    alert("Es gibt keine Reihen zum Löschen.");
+  }
+}
+
 
         function reloadPage() {
-            location.reload();
+            fetch('http://localhost:5000/personCountFunction') 
+            .then(response => response.text())
+            .then(text => {
+                    const div = document.getElementById("tb");
+                    div.innerHTML = text;
+            })
         }
 
-        setInterval(reloadPage, 3000);
+        /*setInterval(reloadPage, 50);*/
 
         function addtb() {
 
@@ -78,4 +195,4 @@
     </script>
 
 </body>
-</html>
+</html>	

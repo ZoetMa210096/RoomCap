@@ -1,5 +1,6 @@
 
 from flask import Flask, render_template
+from flask_cors import CORS, cross_origin
 import serial
 import logging
 import threading
@@ -31,10 +32,16 @@ arduino_thread = threading.Thread(target=poll_arduino, daemon=True)
 arduino_thread.start()
 
 app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
+CORS(app, support_credentials=True)
 
 @app.route("/")
 def index():
-    return render_template('index.html') + str(personCount)
+    return render_template('index.html')
 
     if __name__=='__main__':
         app.run(debug = True)
+
+@app.route("/personCountFunction")
+@cross_origin(supports_credentials=True)
+def personCountFunction():
+    return str(personCount)
