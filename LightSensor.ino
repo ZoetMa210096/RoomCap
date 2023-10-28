@@ -14,15 +14,17 @@
 
 
     int IRread = digitalRead(IRpin);  
-    digitalWrite(ledPin,LOW); 
-  
 
-  
+    digitalWrite(ledPin,LOW); 
+
   if(IRread == 1){ 
 
     digitalWrite(ledPin,HIGH);
-    Serial.print(IRread);
+    Serial.println("yes");
 
   } 
+  else {
+    Serial.println("no");
+  }
 
 } 
