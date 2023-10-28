@@ -1,5 +1,5 @@
 
-from flask import Flask
+from flask import Flask, render_template
 import serial
 import logging
 import threading
@@ -30,11 +30,11 @@ def poll_arduino():
 arduino_thread = threading.Thread(target=poll_arduino, daemon=True)
 arduino_thread.start()
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templateFiles', static_folder='staticFiles')
 
 @app.route("/")
-def hello_world():
+def index():
+    return render_template('index.html') + str(personCount)
 
-    return "<h1>This is our LightSensor Project!</h1>" + " " + str(personCount)
-    
-    
+    if __name__=='__main__':
+        app.run(debug = True)

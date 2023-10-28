@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+    <title>RoomCap</title>
+
+    <style>
+
+
+        body,h1 {font-family: "Raleway", sans-serif}
+        body, html {height: 100%}
+        .bgimg {
+
+        min-height: 100%;
+        background-position: center;
+        background-size: cover;
+        }
+        h1{
+            text-align: center;
+            color: black;
+        }
+        .formatLeft{
+            margin-left: 10%;
+        }
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>RoomCap</h1><br /><br />
+
+    <form class="formatLeft">
+        <input type="button" onclick="addtb()" value="Hier klicken um Namen hinzuzufügen." />
+    </form> 
+
+        <table class="formatLeft">
+                <tr>
+                    <th>ID</th>
+                    <th>Raum Nummer</th>
+                    <th>Raum Name</th>
+                    <th>Personen</th>
+                </tr>
+                <tbody id="tb">
+                </tbody>
+        </table>
+        
+    <script>
+
+        function reloadPage() {
+            location.reload();
+        }
+
+        setInterval(reloadPage, 3000);
+
+        function addtb() {
+
+            var formData = new FormData(document.querySelector('form'));
+            var tr = document.createElement('tr');
+            
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            td1.append(document.createTextNode(formData.get('Vorname')));
+            td2.append(document.createTextNode(formData.get('Nachname')));
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            document.getElementById('tb').appendChild(tr);
+
+        }
+    </script>
+
+</body>
+</html>
